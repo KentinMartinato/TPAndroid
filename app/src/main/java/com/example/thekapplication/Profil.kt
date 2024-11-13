@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,9 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.thekapplication.ui.theme.TheKApplicationTheme
 import kotlinx.serialization.Serializable
+import androidx.navigation.NavDestination.Companion.hasRoute
+
 @Serializable class Profile
 @Serializable class Films
 @Serializable class Series
@@ -57,19 +62,19 @@ class MainActivity : ComponentActivity() {
                         NavigationBar {
                         NavigationBarItem(
                             icon = {Image(
-                                painterResource(id = R.Drawable.film_icon_png_36_1323125910),
+                                painterResource(id = R.drawable.film_icon_png_36_1323125910),
                                 contentDescription = "Logo film",
                                 modifier = Modifier.size(20.dp),)},
                             label = { Text("Films")},
-                            selected = currentDestination?.hasRoute<Films() == true,
+                            selected = currentDestination?.hasRoute<Films>() == true,
                             onClick = { navController.navigate(Films())})
                         NavigationBarItem(
                             icon = {Image(
-                                painterResource(id = R.Drawable.film_icon_png_36_1323125910),
+                                painterResource(id = R.drawable.film_icon_png_36_1323125910),
                                 contentDescription = "Logo series",
                                 modifier = Modifier.size(20.dp),)},
                             label = { Text("Series")},
-                            selected = currentDestination?.hasRoute<Series() == true,
+                            selected = currentDestination?.hasRoute<Series>() == true,
                             onClick = { navController.navigate(Series())})
                     }
                 })
