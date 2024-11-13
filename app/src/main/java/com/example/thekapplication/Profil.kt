@@ -44,14 +44,38 @@ import kotlinx.serialization.Serializable
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+       // enableEdgeToEdge()
         val viewmodel : MainViewModel by viewModels()
         setContent {
             val navController = rememberNavController()
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
 
             TheKApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavHost(navController = navController, startDestination = Profile()){
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                        bottomBar = {
+                        NavigationBar {
+                        NavigationBarItem(
+                            icon = {Image(
+                                painterResource(id = R.Drawable.film_icon_png_36_1323125910),
+                                contentDescription = "Logo film",
+                                modifier = Modifier.size(20.dp),)},
+                            label = { Text("Films")},
+                            selected = currentDestination?.hasRoute<Films() == true,
+                            onClick = { navController.navigate(Films())})
+                        NavigationBarItem(
+                            icon = {Image(
+                                painterResource(id = R.Drawable.film_icon_png_36_1323125910),
+                                contentDescription = "Logo series",
+                                modifier = Modifier.size(20.dp),)},
+                            label = { Text("Series")},
+                            selected = currentDestination?.hasRoute<Series() == true,
+                            onClick = { navController.navigate(Series())})
+                    }
+                })
+                { innerPadding ->
+                    NavHost(navController = navController, startDestination = Profile(),
+                        Modifier.padding(innerPadding)){
                         composable<Profile> {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Pdp(
@@ -66,25 +90,13 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable<Films> {
-                            bottomBar = {
-                                NavigationBar {
-                                    NavigationBarItem(
-                                        icon{...}, label = { Text("Film")},
-                                        selected = currentDestination?.hasRoute<Films() == true,
-                                        onClick = { navController.navigate(Films())})
-                                    NavigationBarItem(
-                                        icon{...}, label { Text("Serie")},
-                                        selected = currentDestination?.hasRoute<Series()
-                                    )
-                                }
-                            }
-                        Greeting(
+                            Greeting(
                             name = "",
                             modifier = Modifier.padding(innerPadding),
                             viewmodel
-                        )
+                            )
                             Pagefilm(onClick = { navController.navigate(Profile()) })
-                    }
+                        }
                         composable<Series> {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Pdp(
