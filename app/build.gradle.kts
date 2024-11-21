@@ -51,7 +51,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material:material:1.7.1")
+
+    implementation("androidx.compose.material3:material3:1.3.1")
     implementation(libs.androidx.navigation.compose)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")

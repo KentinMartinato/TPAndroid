@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.thekapplication.ui.theme.TheKApplicationTheme
 @Composable
-fun Pagefilm(onClick: () -> Unit){
+fun PageFilm(onClick: () -> Unit){
     Column (modifier = Modifier.fillMaxWidth()) {
         Spacer(
             modifier = Modifier.height(40.dp)
