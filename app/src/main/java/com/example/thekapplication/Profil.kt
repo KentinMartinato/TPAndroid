@@ -109,7 +109,7 @@ class MainActivity : ComponentActivity() {
                                 onQueryChange = { searchText = it},
                                 onSearch = {viewmodel.getFilm(it)},
                                 active = active,
-                                onActiveChange = { active = it  },
+                                onActiveChange = { active = false  },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(16.dp)
