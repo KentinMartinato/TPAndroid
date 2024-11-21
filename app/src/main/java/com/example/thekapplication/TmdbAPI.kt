@@ -13,5 +13,5 @@ interface TmdbAPI {
     suspend fun lastactor(@Query("api_key")apikey: String): TMDBActorResult
     @GET("search/movie")
     suspend fun searchmovie(@Query("api_key") apikey: String,
-    @Path("movie_name") name: String) : TMDBMovieResult
+    @Query("movie_name") name: String) : TMDBMovieResult
 }
