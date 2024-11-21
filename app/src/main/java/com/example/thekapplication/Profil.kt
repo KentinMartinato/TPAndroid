@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
                             SearchBar(
                                 query = searchText,
                                 onQueryChange = { searchText = it},
-                                onSearch = {},
+                                onSearch = {viewmodel.getFilm(it)},
                                 active = active,
                                 onActiveChange = { active = it  },
                                 modifier = Modifier

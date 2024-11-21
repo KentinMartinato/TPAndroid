@@ -37,7 +37,7 @@ import com.example.thekapplication.ui.theme.TheKApplicationTheme
 fun PageFilm(onClick: () -> Unit){
     Column (modifier = Modifier.fillMaxWidth()) {
         Spacer(
-            modifier = Modifier.height(40.dp)
+            modifier = Modifier.height(120.dp)
         )
         Button(onClick = onClick) {
             Text("<-")

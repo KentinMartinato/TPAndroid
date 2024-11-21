@@ -16,8 +16,6 @@ class MainViewModel : ViewModel(){
 
     val apikey = "8696f09c5f82a2e663ba12dd2f4321c5"
 
-    val name = ""
-
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/3/")
         .addConverterFactory(MoshiConverterFactory.create())
@@ -39,7 +37,7 @@ class MainViewModel : ViewModel(){
             actors.value = retrofit.lastactor(apikey).results
         }
     }
-    fun getFilm(){
+    fun getFilm(name : String){
         viewModelScope.launch {
             movies.value = retrofit.searchmovie(apikey,name).results
         }

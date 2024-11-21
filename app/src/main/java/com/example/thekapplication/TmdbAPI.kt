@@ -12,6 +12,7 @@ interface TmdbAPI {
     @GET("trending/person/week")
     suspend fun lastactor(@Query("api_key")apikey: String): TMDBActorResult
     @GET("search/movie")
-    suspend fun searchmovie(@Query("api_key") apikey: String,
-    @Query("movie_name") name: String) : TMDBMovieResult
+    suspend fun searchmovie(
+        @Query("api_key") apikey: String,
+        @Query("query") name: String) : TMDBMovieResult
 }
