@@ -66,55 +66,15 @@ class MainActivity : ComponentActivity() {
        // enableEdgeToEdge()
         val viewmodel : MainViewModel by viewModels()
         setContent {
-            val navController = rememberNavController()
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-            var active by remember { mutableStateOf(false) }
-            var searchText by remember {  mutableStateOf("") }
-
-
             TheKApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(),
-                        bottomBar = {
-                        NavigationBar {
-                        NavigationBarItem(
-                            icon = {Image(
-                                painterResource(id = R.drawable.film_icon_png_36_1323125910),
-                                contentDescription = "Logo film",
-                                modifier = Modifier.size(40.dp),)},
-                            label = { Text("Films")},
-                            selected = currentDestination?.hasRoute<Films>() == true,
-                            onClick = { navController.navigate(Films())})
-                        NavigationBarItem(
-                            icon = {Image(
-                                painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
-                                contentDescription = "Logo series",
-                                modifier = Modifier.size(30.dp),)},
-                            label = { Text("Series")},
-                            selected = currentDestination?.hasRoute<Series>() == true,
-                            onClick = { navController.navigate(Series())})
-                        NavigationBarItem(
-                            icon = {Image(
-                                painterResource(id = R.drawable.actor_512_668263753),
-                                contentDescription = "Logo Acteur",
-                                modifier = Modifier.size(30.dp),)},
-                            label = { Text("Acteurs")},
-                            selected = currentDestination?.hasRoute<Acteurs>() == true,
-                            onClick = {navController.navigate(Acteurs())})
-                    }
-                },
-                        topBar = {
-                            SearchBar(
-                                query = searchText,
-                                onQueryChange = { searchText = it},
-                                onSearch = {viewmodel.getFilm(it)},
-                                active = active,
-                                onActiveChange = { active = false  },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {}
-                        })
+
+                val navController = rememberNavController()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+                var active by remember { mutableStateOf(false) }
+                var searchText by remember {  mutableStateOf("") }
+
+                Scaffold(modifier = Modifier.fillMaxSize())
                 { innerPadding ->
                     NavHost(navController = navController, startDestination = Profile()
                     ){
@@ -135,7 +95,8 @@ class MainActivity : ComponentActivity() {
                             Greeting(
                             name = "",
                             modifier = Modifier.padding(innerPadding),
-                            viewmodel
+                            viewmodel,
+                            navController
                             )
                             PageFilm(onClick = { navController.navigate(Profile()) })
                         }
@@ -143,7 +104,8 @@ class MainActivity : ComponentActivity() {
                             Sering(
                                 name = "",
                                 modifier = Modifier.padding(innerPadding),
-                                viewmodel
+                                viewmodel,
+                                navController
                             )
                             PageSerie(onClick = { navController.navigate(Profile()) })
                         }
@@ -151,7 +113,8 @@ class MainActivity : ComponentActivity() {
                             Acting(
                                 name = "",
                                 modifier = Modifier.padding(innerPadding),
-                                viewmodel
+                                viewmodel,
+                                navController
                             )
                             PageActeur(onClick = { navController.navigate(Profile()) })
                         }
