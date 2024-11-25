@@ -119,7 +119,7 @@ class MainActivity : ComponentActivity() {
                             )
                             PageActeur(onClick = { navController.navigate(Profile()) })
                         }
-                        composable<DetailFilm> { backStackEntry ->
+                        composable<DetailFilm> {
                             Detailing(
                                 id = id,
                                 modifier = Modifier.padding(innerPadding),

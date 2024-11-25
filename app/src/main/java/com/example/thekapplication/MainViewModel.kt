@@ -16,11 +16,10 @@ class MainViewModel : ViewModel(){
 
     val actors = MutableStateFlow<List<Actor>>(listOf())
 
-    val details = MutableStateFlow<List<Detail>>(listOf())
+    val details = MutableStateFlow<TMDBDetailFilmResult?>(null)
 
     val apikey = "8696f09c5f82a2e663ba12dd2f4321c5"
 
-    val append = "credits"
 
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/3/")
@@ -50,7 +49,7 @@ class MainViewModel : ViewModel(){
     }
     fun getDetail(id : Int){
         viewModelScope.launch {
-            details.value = retrofit.detaillee(id,apikey,append).results
+            details.value = retrofit.detaillee(id,apikey).results
             Log.v("test", details.value.toString())
         }
     }
