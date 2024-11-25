@@ -11,7 +11,8 @@ interface TmdbAPI {
     @GET("movie/{id}")
     suspend fun detaillee(
         @Path("id") id: Int,
-        @Query("api_key") apikey:String):TMDBDetailFilmResult
+        @Query("api_key") apikey:String,
+        @Query("append_to_response") append: String):TMDBDetailFilmResult
 
     @GET("trending/tv/week")
     suspend fun lastseries(@Query("api_key") apikey: String): TMDBSerieResult

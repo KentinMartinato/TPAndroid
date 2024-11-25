@@ -119,9 +119,9 @@ class MainActivity : ComponentActivity() {
                             )
                             PageActeur(onClick = { navController.navigate(Profile()) })
                         }
-                        composable<DetailFilm> {
+                        composable<DetailFilm> { backStackEntry ->
                             Detailing(
-                                name = "",
+                                id = id,
                                 modifier = Modifier.padding(innerPadding),
                                 viewmodel,
                                 navController

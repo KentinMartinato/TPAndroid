@@ -60,36 +60,45 @@ fun PageDetail(onClick: () -> Unit){
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Detailing(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavHostController) {
+fun Detailing(id: Int, modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavHostController) {
 
     val details by viewModel.details.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var active by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
+    viewModel.getDetail(id)
 
+    if (details.isEmpty()) {
+        Text(
+            text = "Chargement...",
+            fontSize = 35.sp,
+            lineHeight = 80.sp,
+        )
+    } else {
 
-
-    Scaffold(modifier = Modifier.fillMaxSize(),
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
         ) { innerPadding ->
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-        ) {
-            items(details) { detail ->
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    AsyncImage(
-                        model = "https://image.tmdb.org/t/p/original" + detail.poster_path,
-                        contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                    Text(
-                        text = detail.original_title,
-                        fontSize = 35.sp,
-                        lineHeight = 40.sp,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                items(details) { detail ->
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        AsyncImage(
+                            model = "https://image.tmdb.org/t/p/original" + detail.poster_path,
+                            contentDescription = null,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Text(
+                            text = detail.original_title,
+                            fontSize = 35.sp,
+                            lineHeight = 40.sp,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
                 }
             }
         }
