@@ -57,6 +57,7 @@ import kotlinx.coroutines.flow.combine
 @Serializable class Films
 @Serializable class Series
 @Serializable class Acteurs
+@Serializable class DetailFilm
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
@@ -117,6 +118,15 @@ class MainActivity : ComponentActivity() {
                                 navController
                             )
                             PageActeur(onClick = { navController.navigate(Profile()) })
+                        }
+                        composable<DetailFilm> {
+                            Detailing(
+                                name = "",
+                                modifier = Modifier.padding(innerPadding),
+                                viewmodel,
+                                navController
+                            )
+                            PageDetail(onClick = {navController.navigate(Films())})
                         }
                         }
                     }

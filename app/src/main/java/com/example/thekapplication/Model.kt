@@ -63,5 +63,61 @@ data class Actor(
     val profile_path : String
 )
 
+data class TMDBDetailFilmResult(
+    val page : Int,
+    val results: List<Detail>
+)
+data class Detail(
+    val adult: Boolean,
+    val backdrop_path: String,
+    val genres : List<Genre>,
+    val homepage: String,
+    val id: Int,
+    val original_language: String,
+    val original_title: String,
+    val overview: String,
+    val popularity: Double,
+    val poster_path: String,
+    val release_date: String,
+    val credits : List<credits>
+)
+
+data class Genre(
+    val id: Int,
+    val name: String
+)
+
+data class credits(
+    val cast: List<cast>,
+    val crew: List<crew>
+)
 
 
+data class cast(
+    val adult: Boolean,
+    val gender: Int,
+    val id: Int,
+    val know_for_department: String,
+    val name: String,
+    val original_name: String,
+    val popularity: Double,
+    val profile_path: String,
+    val cast_id: Int,
+    val character: String,
+    val credit_id: String,
+    val order: Int
+)
+
+data class crew(
+    val adult: Boolean,
+    val gender: Int,
+    val id: Int,
+    val know_for_department: String,
+    val name: String,
+    val original_name: String,
+    val popularity: Double,
+    val profile_path: String,
+    val credit_id: String,
+    val department: String,
+    val job: String
+)

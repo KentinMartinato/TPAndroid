@@ -137,11 +137,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
         ) {
             items(movies) { movie ->
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    AsyncImage(
+                   Button(onClick = {navController.navigate(DetailFilm())}) { AsyncImage(
                         model = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                         contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
+                    )}
 
                     Text(
                         text = movie.original_title,

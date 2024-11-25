@@ -48,7 +48,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.AsyncImage
 import com.example.thekapplication.ui.theme.TheKApplicationTheme
 @Composable
-fun PageActeur(onClick: () -> Unit){
+fun PageDetail(onClick: () -> Unit){
     Column (modifier = Modifier.fillMaxWidth()){
         Spacer(
             modifier = Modifier.height(120.dp)
@@ -60,84 +60,32 @@ fun PageActeur(onClick: () -> Unit){
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Acting(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavHostController) {
+fun Detailing(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavHostController) {
 
-    val actors by viewModel.actors.collectAsState()
+    val details by viewModel.details.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var active by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 
-    if (actors.isEmpty()) viewModel.getActeurInitiaux()
+
 
     Scaffold(modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.film_icon_png_36_1323125910),
-                            contentDescription = "Logo film",
-                            modifier = Modifier.size(40.dp),
-                        )
-                    },
-                    label = { Text("Films") },
-                    selected = currentDestination?.hasRoute<Films>() == true,
-                    onClick = { navController.navigate(Films()) })
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
-                            contentDescription = "Logo series",
-                            modifier = Modifier.size(30.dp),
-                        )
-                    },
-                    label = { Text("Series") },
-                    selected = currentDestination?.hasRoute<Series>() == true,
-                    onClick = { navController.navigate(Series()) })
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.actor_512_668263753),
-                            contentDescription = "Logo Acteur",
-                            modifier = Modifier.size(30.dp),
-                        )
-                    },
-                    label = { Text("Acteurs") },
-                    selected = currentDestination?.hasRoute<Acteurs>() == true,
-                    onClick = { navController.navigate(Acteurs()) })
-            }
-        },
-        topBar = {
-            SearchBar(
-                query = searchText,
-                onQueryChange = { searchText = it },
-                onSearch = { viewModel.getActor(it) },
-                active = active,
-                onActiveChange = { active = false },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {}
-        }) { innerPadding ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+        ) { innerPadding ->
+        LazyColumn(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(actors) { actor ->
+            items(details) { detail ->
                 Column(modifier = Modifier.fillMaxWidth()) {
                     AsyncImage(
-                        model = "https://image.tmdb.org/t/p/original" + actor.profile_path,
+                        model = "https://image.tmdb.org/t/p/original" + detail.poster_path,
                         contentDescription = null,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Text(
-                        text = actor.original_name,
+                        text = detail.original_title,
                         fontSize = 35.sp,
                         lineHeight = 40.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
