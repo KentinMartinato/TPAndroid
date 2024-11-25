@@ -112,7 +112,7 @@ fun Sering(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
             SearchBar(
                 query = searchText,
                 onQueryChange = { searchText = it },
-                onSearch = { viewModel.getFilm(it) },
+                onSearch = { viewModel.getSerie(it) },
                 active = active,
                 onActiveChange = { active = false },
                 modifier = Modifier

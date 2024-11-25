@@ -42,4 +42,9 @@ class MainViewModel : ViewModel(){
             movies.value = retrofit.searchmovie(apikey,name).results
         }
     }
+    fun getSerie(name : String){
+        viewModelScope.launch {
+            series.value = retrofit.searchserie(apikey,name).results
+        }
+    }
 }

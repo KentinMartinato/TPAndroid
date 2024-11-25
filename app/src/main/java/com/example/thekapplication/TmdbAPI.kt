@@ -15,4 +15,7 @@ interface TmdbAPI {
     suspend fun searchmovie(
         @Query("api_key") apikey: String,
         @Query("query") name: String) : TMDBMovieResult
+    suspend fun searchserie(
+        @Query("api_key") apikey: String,
+        @Query("query") name: String) : TMDBSerieResult
 }
