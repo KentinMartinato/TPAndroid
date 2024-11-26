@@ -49,6 +49,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.thekapplication.ui.theme.TheKApplicationTheme
 import kotlinx.serialization.Serializable
 import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
@@ -57,7 +58,7 @@ import kotlinx.coroutines.flow.combine
 @Serializable class Films
 @Serializable class Series
 @Serializable class Acteurs
-@Serializable class DetailFilm
+@Serializable data class DetailFilm(val id :String)
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
@@ -119,9 +120,10 @@ class MainActivity : ComponentActivity() {
                             )
                             PageActeur(onClick = { navController.navigate(Profile()) })
                         }
-                        composable<DetailFilm> {
+                        composable<DetailFilm> {backStackEntry ->
+                            val moviedetail: DetailFilm = backStackEntry.toRoute()
                             Detailing(
-                                id = id,
+                                id = moviedetail.id,
                                 modifier = Modifier.padding(innerPadding),
                                 viewmodel,
                                 navController

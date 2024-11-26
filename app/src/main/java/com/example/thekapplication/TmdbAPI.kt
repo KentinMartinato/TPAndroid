@@ -8,10 +8,10 @@ interface TmdbAPI {
     @GET("trending/movie/week")
     suspend fun lastmovies(@Query("api_key") apikey: String): TMDBMovieResult
 
-    @GET("movie/{id}")
-    suspend fun detaillee(
-        @Path("id") id: Int,
-        @Query("api_key") apikey:String):TMDBDetailFilmResult
+    @GET("movie/{id}?append_to_response=credits")
+    suspend fun detailfilm(
+        @Path("id") id: String,
+        @Query("api_key") apikey:String):FilmDetail
 
     @GET("trending/tv/week")
     suspend fun lastseries(@Query("api_key") apikey: String): TMDBSerieResult

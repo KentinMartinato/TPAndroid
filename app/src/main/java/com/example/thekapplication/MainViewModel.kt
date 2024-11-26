@@ -1,7 +1,6 @@
 package com.example.thekapplication
 
 import android.util.Log
-import android.util.Log.v
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +15,7 @@ class MainViewModel : ViewModel(){
 
     val actors = MutableStateFlow<List<Actor>>(listOf())
 
-    val details = MutableStateFlow<TMDBDetailFilmResult?>(null)
+    val detail = MutableStateFlow<FilmDetail?>(null)
 
     val apikey = "8696f09c5f82a2e663ba12dd2f4321c5"
 
@@ -47,10 +46,10 @@ class MainViewModel : ViewModel(){
             movies.value = retrofit.searchmovie(apikey,name).results
         }
     }
-    fun getDetail(id : Int){
+    fun getDetail(id : String){
         viewModelScope.launch {
-            details.value = retrofit.detaillee(id,apikey).results
-            Log.v("test", details.value.toString())
+            detail.value = retrofit.detailfilm(id,apikey)
+            Log.v("test", detail.value.toString())
         }
     }
     fun getSerie(name : String){

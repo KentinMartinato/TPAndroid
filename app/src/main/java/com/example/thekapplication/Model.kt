@@ -65,9 +65,9 @@ data class Actor(
 
 data class TMDBDetailFilmResult(
     val page : Int,
-    val results: List<Detail>
+    val results: List<FilmDetail>
 )
-data class Detail(
+data class FilmDetail(
     val adult: Boolean,
     val backdrop_path: String,
     val genres : List<Genre>,
@@ -77,9 +77,9 @@ data class Detail(
     val original_title: String,
     val overview: String,
     val popularity: Double,
-    val poster_path: String,
+    val poster_path: String?,
     val release_date: String,
-    val credits : List<credits>
+    val credits : credits
 )
 
 data class Genre(
