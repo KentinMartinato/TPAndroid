@@ -1,5 +1,7 @@
 package com.example.thekapplication
 
+import android.os.Parcelable.Creator
+
 data class TMDBMovieResult(
     val page: Int,
     val results: List<Movie>
@@ -120,4 +122,38 @@ data class crew(
     val credit_id: String,
     val department: String,
     val job: String
+)
+
+data class TMDBDetailSerieResult(
+    val page : Int,
+    val results: List<SerieDetail>
+)
+
+data class SerieDetail(
+    val adult: Boolean,
+    val backdrop_path: String,
+    val created_by : List<Createur>,
+    val first_air_date: String,
+    val genre : List<Genre>,
+    val homepage: String,
+    val id: Int,
+    val in_production: Boolean,
+    val last_air_date: String,
+    val name: String,
+    val number_of_episode: Int,
+    val number_of_season: Int,
+    val overview: String,
+    val popularity: Double,
+    val poster_path: String,
+    val credits: credits
+)
+
+data class Createur(
+    val id: Int,
+    val credit_id: String,
+    val name: String,
+    val original_name: String,
+    val gender: Int,
+    val profile_path: String
+
 )

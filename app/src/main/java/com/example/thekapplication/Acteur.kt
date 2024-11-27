@@ -1,5 +1,6 @@
 package com.example.thekapplication
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,6 +71,9 @@ fun Acting(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
     var searchText by remember { mutableStateOf("") }
 
     if (actors.isEmpty()) viewModel.getActeurInitiaux()
+
+    val configuration = LocalConfiguration.current
+    val portrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -121,7 +126,7 @@ fun Acting(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
             ) {}
         }) { innerPadding ->
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(if (portrait)2 else 3),
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding),
@@ -134,13 +139,17 @@ fun Acting(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
                     AsyncImage(
                         model = "https://image.tmdb.org/t/p/original" + actor.profile_path,
                         contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier.fillMaxWidth()
+                            .height(if (portrait)250.dp else 180.dp)
+                            .clip(shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)),
+                        contentScale = ContentScale.Crop
                     )
                     Text(
                         text = actor.original_name,
-                        fontSize = 35.sp,
-                        lineHeight = 40.sp,
+                        fontSize = if (portrait) 18.sp else 16.sp,
+                        lineHeight = 24.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(top = 8.dp)
                     )
                 }
             }

@@ -1,11 +1,14 @@
 package com.example.thekapplication
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -38,8 +41,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -75,6 +79,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
     var searchText by remember { mutableStateOf("") }
 
     if (movies.isEmpty()) viewModel.getFilmInitaux()
+
+    val configuration = LocalConfiguration.current
+    val portrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -127,7 +134,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
             ) {}
         }) { innerPadding ->
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(if (portrait)2 else 3),
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding),
@@ -137,23 +144,35 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
         ) {
             items(movies) { movie ->
                 Column(modifier = Modifier.fillMaxWidth()) {
-                   Button(onClick = {navController.navigate(DetailFilm(movie.id.toString()))}) { AsyncImage(
+                   Box(
+                       modifier = Modifier.fillMaxWidth()
+                           .clip(shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
+                           .clickable {navController.navigate(DetailFilm(movie.id.toString()))}
+                           .padding(8.dp)
+                   ) {
+                       AsyncImage(
                         model = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                         contentDescription = null,
-                    )}
-
+                        modifier = Modifier.fillMaxWidth()
+                            .height(if (portrait)250.dp else 180.dp)
+                            .clip(shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)),
+                           contentScale = ContentScale.Crop
+                    )
+                   }
                     Text(
                         text = movie.original_title,
-                        fontSize = 35.sp,
-                        lineHeight = 40.sp,
+                        fontSize = if (portrait) 18.sp else 16.sp,
+                        lineHeight = 24.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(top = 8.dp)
                     )
 
                     Text(
                         text = movie.release_date,
-                        fontSize = 35.sp,
-                        lineHeight = 40.sp,
+                        fontSize = if (portrait)14.sp else 12.sp,
+                        lineHeight = 20.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(top = 4.dp)
                     )
                 }
             }

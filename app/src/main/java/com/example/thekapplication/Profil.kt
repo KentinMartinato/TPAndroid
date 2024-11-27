@@ -58,7 +58,8 @@ import kotlinx.coroutines.flow.combine
 @Serializable class Films
 @Serializable class Series
 @Serializable class Acteurs
-@Serializable data class DetailFilm(val id :String)
+@Serializable data class DetailFilm(val id : String)
+@Serializable data class DetailSerie(val id: String)
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
@@ -122,13 +123,23 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<DetailFilm> {backStackEntry ->
                             val moviedetail: DetailFilm = backStackEntry.toRoute()
-                            Detailing(
+                            DetailingF(
                                 id = moviedetail.id,
                                 modifier = Modifier.padding(innerPadding),
                                 viewmodel,
                                 navController
                             )
-                            PageDetail(onClick = {navController.navigate(Films())})
+                            PageDetailFilm(onClick = {navController.navigate(Films())})
+                        }
+                        composable<DetailSerie> {backStackEntry ->
+                            val seriedetail: DetailSerie = backStackEntry.toRoute()
+                            DetailingS(
+                                id = seriedetail.id,
+                                modifier = Modifier.padding(innerPadding),
+                                viewmodel,
+                                navController
+                            )
+                            PageDetailSerie(onClick = {navController.navigate(Series())})
                         }
                         }
                     }

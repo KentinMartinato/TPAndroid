@@ -15,7 +15,9 @@ class MainViewModel : ViewModel(){
 
     val actors = MutableStateFlow<List<Actor>>(listOf())
 
-    val detail = MutableStateFlow<FilmDetail?>(null)
+    val detailF = MutableStateFlow<FilmDetail?>(null)
+
+    val detailS = MutableStateFlow<SerieDetail?>(null)
 
     val apikey = "8696f09c5f82a2e663ba12dd2f4321c5"
 
@@ -46,15 +48,19 @@ class MainViewModel : ViewModel(){
             movies.value = retrofit.searchmovie(apikey,name).results
         }
     }
-    fun getDetail(id : String){
+    fun getDetailFilm(id : String){
         viewModelScope.launch {
-            detail.value = retrofit.detailfilm(id,apikey)
-            Log.v("test", detail.value.toString())
+            detailF.value = retrofit.detailfilm(id,apikey)
         }
     }
     fun getSerie(name : String){
         viewModelScope.launch {
             series.value = retrofit.searchserie(apikey,name).results
+        }
+    }
+    fun getDetailSerie(id: String){
+        viewModelScope.launch {
+            detailS.value = retrofit.detailserie(id,apikey)
         }
     }
     fun getActor(name: String){

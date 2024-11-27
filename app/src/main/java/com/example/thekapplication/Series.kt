@@ -1,11 +1,14 @@
 package com.example.thekapplication
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -38,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,6 +73,9 @@ fun Sering(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
     var searchText by remember { mutableStateOf("") }
 
     if (series.isEmpty()) viewModel.getSerieInitiaux()
+
+    val configuration = LocalConfiguration.current
+    val portrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -121,7 +128,7 @@ fun Sering(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
             ) {}
         }) { innerPadding ->
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Fixed(if (portrait)2 else 3),
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding),
@@ -131,22 +138,34 @@ fun Sering(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
         ) {
             items(series) { serie ->
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    AsyncImage(
-                        model = "https://image.tmdb.org/t/p/original" + serie.poster_path,
-                        contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                            .clip(shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
+                            .clickable {navController.navigate(DetailSerie(serie.id.toString()))}
+                            .padding(8.dp)
+                    )  {
+                        AsyncImage(
+                            model = "https://image.tmdb.org/t/p/original" + serie.poster_path,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(if (portrait)250.dp else 180.dp)
+                                .clip(shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                     Text(
                         text = serie.original_name,
-                        fontSize = 35.sp,
-                        lineHeight = 40.sp,
+                        fontSize = if (portrait) 18.sp else 16.sp,
+                        lineHeight = 24.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(top = 8.dp)
                     )
                     Text(
                         text = serie.first_air_date,
-                        fontSize = 35.sp,
-                        lineHeight = 40.sp,
+                        fontSize = if (portrait)14.sp else 12.sp,
+                        lineHeight = 20.sp,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(top = 4.dp)
                     )
                 }
             }

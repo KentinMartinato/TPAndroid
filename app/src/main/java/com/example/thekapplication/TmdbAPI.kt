@@ -16,6 +16,11 @@ interface TmdbAPI {
     @GET("trending/tv/week")
     suspend fun lastseries(@Query("api_key") apikey: String): TMDBSerieResult
 
+    @GET("tv/{id}?append_to_response=credits")
+    suspend fun detailserie(
+        @Path("id") id: String,
+        @Query("api_key") apikey: String): SerieDetail
+
     @GET("trending/person/week")
     suspend fun lastactor(@Query("api_key")apikey: String): TMDBActorResult
 

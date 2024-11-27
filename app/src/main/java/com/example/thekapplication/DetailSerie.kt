@@ -32,7 +32,7 @@ import coil.compose.AsyncImage
 @OptIn(ExperimentalMaterial3Api::class)
 @Suppress
 @Composable
-fun PageDetailFilm(onClick: () -> Unit){
+fun PageDetailSerie(onClick: () -> Unit){
     Column (modifier = Modifier.fillMaxWidth()){
         Spacer(
             modifier = Modifier.height(120.dp)
@@ -44,14 +44,14 @@ fun PageDetailFilm(onClick: () -> Unit){
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailingF(id: String, modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavHostController) {
+fun DetailingS(id: String, modifier: Modifier = Modifier, viewModel: MainViewModel, navController: NavHostController) {
 
-    val details by viewModel.detailF.collectAsState()
+    val details by viewModel.detailS.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var active by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
-    viewModel.getDetailFilm(id)
+    viewModel.getDetailSerie(id)
 
     if (details == null) {
         Text(
@@ -72,9 +72,9 @@ fun DetailingF(id: String, modifier: Modifier = Modifier, viewModel: MainViewMod
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
-            )  {
+            ) {
                 item {
-                    details!!.original_title?.let { title ->
+                    details!!.name?.let { title ->
                         Text(
                             text = title,
                             fontSize = 35.sp,
@@ -99,7 +99,7 @@ fun DetailingF(id: String, modifier: Modifier = Modifier, viewModel: MainViewMod
                     }
                 }
                 item {
-                    details!!.overview?.let{ resume ->
+                    details!!.overview?.let { resume ->
                         Text(
                             text = resume,
                             fontSize = 35.sp,
@@ -107,7 +107,7 @@ fun DetailingF(id: String, modifier: Modifier = Modifier, viewModel: MainViewMod
                         )
                     }
                 }
-                items(details!!.credits.cast){acteur ->
+                items(details!!.credits.cast) {acteur ->
                     Column(modifier = Modifier.fillMaxWidth()){
                         AsyncImage(
                             model = "https://image.tmdb.org/t/p/original" + acteur.profile_path,
@@ -118,12 +118,12 @@ fun DetailingF(id: String, modifier: Modifier = Modifier, viewModel: MainViewMod
                             text = acteur.original_name,
                             fontSize = 35.sp,
                             lineHeight = 40.sp,
-
                             )
                     }
-
+                    }
+                    }
+                    }
                 }
             }
-        }
-    }
-}
+
+
