@@ -1,20 +1,24 @@
 package com.example.thekapplication
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -37,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -76,24 +81,59 @@ class MainActivity : ComponentActivity() {
                 val currentDestination = navBackStackEntry?.destination
                 var active by remember { mutableStateOf(false) }
                 var searchText by remember {  mutableStateOf("") }
+                val configuration = LocalConfiguration.current
+                val portrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
                 Scaffold(modifier = Modifier.fillMaxSize())
                 { innerPadding ->
                     NavHost(navController = navController, startDestination = Profile()
                     ){
                         composable<Profile> {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Pdp(
-                                    name = "Android",
-                                    modifier = Modifier.padding(innerPadding)
-                                )
-                                Sociaux(
-                                    name = "Android",
-                                    modifier = Modifier.padding(innerPadding)
-                                )
-                                DemarrerButton(onClick = {navController.navigate(Films())})
+                            if(!portrait) {
+                                Row(
+                                    modifier = Modifier.fillMaxSize()
+                                        .padding(innerPadding)
+                                ) {
+                                    Column(
+                                        modifier = Modifier.weight(1f)
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 16.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Pdp(
+                                            name = "Android"
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(16.dp))
+
+                                    Box(
+                                        modifier = Modifier.weight(1f)
+                                            .fillMaxHeight()
+                                            .padding(16.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Sociaux(
+                                                name = "Android",
+                                            )
+                                            Spacer(modifier = Modifier.height(16.dp))
+                                            DemarrerButton(onClick = { navController.navigate(Films()) })
+                                        }
+                                    }
+                                }
                             }
-                        }
+                            else{
+                                Column(modifier = Modifier.fillMaxSize()
+                                    .padding(innerPadding),
+                                    horizontalAlignment = Alignment.CenterHorizontally){
+                                    Pdp(name = "Android")
+                                    Sociaux(name = "Android")
+                                    DemarrerButton(onClick = {navController.navigate(Films())})
+                                }
+                                }
+                                }
                         composable<Films> {
                             Greeting(
                             name = "",
@@ -150,10 +190,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Pdp(name: String, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.fillMaxWidth())
+    Column(modifier = Modifier.fillMaxWidth()
+        .padding(horizontal = 16.dp))
     {
         Spacer(
-            modifier = Modifier.height(80.dp)
+            modifier = Modifier.height(40.dp)
         )
         Image(
             painterResource(id = R.drawable.photo_de_profil),
@@ -173,13 +214,13 @@ fun Pdp(name: String, modifier: Modifier = Modifier) {
         Text(
             text = "Alternant en informatique appliqué à la santé",
             fontSize = 15.sp,
-            lineHeight = 1.sp,
+            lineHeight = 25.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
         Text(
             text = "Ecole d'ingénieur ISIS - INU Champolion",
             fontSize = 15.sp,
-            lineHeight = 20.sp,
+            lineHeight = 25.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
         Spacer(

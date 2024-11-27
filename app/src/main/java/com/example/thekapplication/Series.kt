@@ -79,53 +79,57 @@ fun Sering(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.film_icon_png_36_1323125910),
-                            contentDescription = "Logo film",
-                            modifier = Modifier.size(40.dp),
-                        )
-                    },
-                    label = { Text("Films") },
-                    selected = currentDestination?.hasRoute<Films>() == true,
-                    onClick = { navController.navigate(Films()) })
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
-                            contentDescription = "Logo series",
-                            modifier = Modifier.size(30.dp),
-                        )
-                    },
-                    label = { Text("Series") },
-                    selected = currentDestination?.hasRoute<Series>() == true,
-                    onClick = { navController.navigate(Series()) })
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.actor_512_668263753),
-                            contentDescription = "Logo Acteur",
-                            modifier = Modifier.size(30.dp),
-                        )
-                    },
-                    label = { Text("Acteurs") },
-                    selected = currentDestination?.hasRoute<Acteurs>() == true,
-                    onClick = { navController.navigate(Acteurs()) })
+            if (portrait) {
+                NavigationBar {
+                    NavigationBarItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.film_icon_png_36_1323125910),
+                                contentDescription = "Logo film",
+                                modifier = Modifier.size(40.dp),
+                            )
+                        },
+                        label = { Text("Films") },
+                        selected = currentDestination?.hasRoute<Films>() == true,
+                        onClick = { navController.navigate(Films()) })
+                    NavigationBarItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
+                                contentDescription = "Logo series",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        },
+                        label = { Text("Series") },
+                        selected = currentDestination?.hasRoute<Series>() == true,
+                        onClick = { navController.navigate(Series()) })
+                    NavigationBarItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.actor_512_668263753),
+                                contentDescription = "Logo Acteur",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        },
+                        label = { Text("Acteurs") },
+                        selected = currentDestination?.hasRoute<Acteurs>() == true,
+                        onClick = { navController.navigate(Acteurs()) })
+                }
             }
         },
         topBar = {
-            SearchBar(
-                query = searchText,
-                onQueryChange = { searchText = it },
-                onSearch = { viewModel.getSerie(it) },
-                active = active,
-                onActiveChange = { active = false },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {}
+            if (portrait) {
+                SearchBar(
+                    query = searchText,
+                    onQueryChange = { searchText = it },
+                    onSearch = { viewModel.getSerie(it) },
+                    active = active,
+                    onActiveChange = { active = false },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {}
+            }
         }) { innerPadding ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(if (portrait)2 else 3),

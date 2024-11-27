@@ -26,8 +26,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
@@ -85,43 +88,46 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
 
     Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.film_icon_png_36_1323125910),
-                            contentDescription = "Logo film",
-                            modifier = Modifier.size(40.dp),
-                        )
-                    },
-                    label = { Text("Films") },
-                    selected = currentDestination?.hasRoute<Films>() == true,
-                    onClick = { navController.navigate(Films()) })
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
-                            contentDescription = "Logo series",
-                            modifier = Modifier.size(30.dp),
-                        )
-                    },
-                    label = { Text("Series") },
-                    selected = currentDestination?.hasRoute<Series>() == true,
-                    onClick = { navController.navigate(Series()) })
-                NavigationBarItem(
-                    icon = {
-                        Image(
-                            painterResource(id = R.drawable.actor_512_668263753),
-                            contentDescription = "Logo Acteur",
-                            modifier = Modifier.size(30.dp),
-                        )
-                    },
-                    label = { Text("Acteurs") },
-                    selected = currentDestination?.hasRoute<Acteurs>() == true,
-                    onClick = { navController.navigate(Acteurs()) })
+            if (portrait) {
+                NavigationBar {
+                    NavigationBarItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.film_icon_png_36_1323125910),
+                                contentDescription = "Logo film",
+                                modifier = Modifier.size(40.dp),
+                            )
+                        },
+                        label = { Text("Films") },
+                        selected = currentDestination?.hasRoute<Films>() == true,
+                        onClick = { navController.navigate(Films()) })
+                    NavigationBarItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
+                                contentDescription = "Logo series",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        },
+                        label = { Text("Series") },
+                        selected = currentDestination?.hasRoute<Series>() == true,
+                        onClick = { navController.navigate(Series()) })
+                    NavigationBarItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.actor_512_668263753),
+                                contentDescription = "Logo Acteur",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        },
+                        label = { Text("Acteurs") },
+                        selected = currentDestination?.hasRoute<Acteurs>() == true,
+                        onClick = { navController.navigate(Acteurs()) })
+                }
             }
         },
-        topBar = {
+        topBar =  {
+            if(portrait){
             SearchBar(
                 query = searchText,
                 onQueryChange = { searchText = it },
@@ -132,7 +138,46 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {}
+            }
         }) { innerPadding ->
+        Row (modifier = Modifier.fillMaxSize()){
+            if(!portrait){
+                NavigationRail(modifier = Modifier.fillMaxWidth()
+                    .padding(16.dp)) {
+                    NavigationRailItem(
+                        icon = {Image(
+                            painterResource(id = R.drawable.film_icon_png_36_1323125910),
+                            contentDescription = "Logo film",
+                            modifier = Modifier.size(40.dp),
+                        )},
+                        label = { Text("Films") },
+                        selected = currentDestination?.hasRoute<Films>() == true,
+                        onClick = { navController.navigate(Films()) })
+                    NavigationRailItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.movie_stream_tv_series_512_1666241017),
+                                contentDescription = "Logo series",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        },
+                        label = { Text("Series") },
+                        selected = currentDestination?.hasRoute<Series>() == true,
+                        onClick = { navController.navigate(Series()) })
+                    NavigationRailItem(
+                        icon = {
+                            Image(
+                                painterResource(id = R.drawable.actor_512_668263753),
+                                contentDescription = "Logo Acteur",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        },
+                        label = { Text("Acteurs") },
+                        selected = currentDestination?.hasRoute<Acteurs>() == true,
+                        onClick = { navController.navigate(Acteurs()) })
+                        }
+                }
+            }
         LazyVerticalGrid(
             columns = GridCells.Fixed(if (portrait)2 else 3),
             modifier = modifier
