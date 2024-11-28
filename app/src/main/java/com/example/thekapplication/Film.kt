@@ -125,9 +125,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: MainViewMod
                         onClick = { navController.navigate(Acteurs()) })
                     NavigationBarItem(
                         icon = {},
-                        label = { Text("Playlist") },
-                        selected = currentDestination?.hasRoute<Playlist>() == true,
-                        onClick = { navController.navigate(Playlist()) })
+                        label = { Text("PlaylistPage") },
+                        selected = currentDestination?.hasRoute<PlaylistPage>() == true,
+                        onClick = { navController.navigate(PlaylistPage()) })
                 }
             }
         },

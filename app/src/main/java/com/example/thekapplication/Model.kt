@@ -1,6 +1,6 @@
 package com.example.thekapplication
 
-import android.os.Parcelable.Creator
+
 import kotlin.time.Duration
 
 data class TMDBMovieResult(

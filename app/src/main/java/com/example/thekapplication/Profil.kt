@@ -65,7 +65,7 @@ import kotlinx.coroutines.flow.combine
 @Serializable class Acteurs
 @Serializable data class DetailFilm(val id : String)
 @Serializable data class DetailSerie(val id: String)
-@Serializable class Playlist
+@Serializable class PlaylistPage
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
@@ -123,7 +123,7 @@ class MainActivity : ComponentActivity() {
                                                 name = "Android",
                                             )
                                             Spacer(modifier = Modifier.height(16.dp))
-                                            DemarrerButton(onClick = { navController.navigate(Playlist()) })
+                                            DemarrerButton(onClick = { navController.navigate(PlaylistPage()) })
                                         }
                                     }
                                 }
@@ -135,7 +135,7 @@ class MainActivity : ComponentActivity() {
                                     horizontalAlignment = Alignment.CenterHorizontally){
                                     Pdp(name = "Android")
                                     Sociaux(name = "Android")
-                                    DemarrerButton(onClick = {navController.navigate(Playlist())})
+                                    DemarrerButton(onClick = {navController.navigate(PlaylistPage())})
                                 }
                                 }
                                 }
@@ -186,7 +186,9 @@ class MainActivity : ComponentActivity() {
                             )
                             PageDetailSerie(onClick = {navController.navigate(Series())})
                         }
-                        composable<Playlist> {
+                        composable<PlaylistPage> {
+                            Playing(name = "", viewModel = viewmodel)
+
                             PagePlaylist(onClick = { navController.navigate(Profile()) })
                         }
                         }
