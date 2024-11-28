@@ -187,7 +187,7 @@ class MainActivity : ComponentActivity() {
                             PageDetailSerie(onClick = {navController.navigate(Series())})
                         }
                         composable<PlaylistPage> {
-                            Playing(name = "", viewModel = viewmodel)
+                            Playing(name = "", viewModel = viewmodel, navController = navController)
 
                             PagePlaylist(onClick = { navController.navigate(Profile()) })
                         }

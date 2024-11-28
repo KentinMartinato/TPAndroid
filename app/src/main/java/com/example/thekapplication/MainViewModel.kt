@@ -81,14 +81,14 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun fetchPlaylist(): Playlist {
+    fun fetchPlaylist(): PlaylistResult {
         val moshi = Moshi.Builder().build()
-        return moshi.adapter(Playlist::class.java).fromJson(playlistjson)!!
+        return moshi.adapter(PlaylistResult::class.java).fromJson(playlistjson)!!
     }
 
     fun getPlaylist() {
         viewModelScope.launch {
-
+            plays.value = fetchPlaylist().results
         }
     }
 }

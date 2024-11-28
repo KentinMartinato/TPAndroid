@@ -158,6 +158,10 @@ data class Createur(
     val profile_path: String
 
 )
+data class PlaylistResult(
+    val page : Int,
+    val results: List<Playlist>
+)
 data class Playlist(
     val checksum: String,
     val collaborative: Boolean,
