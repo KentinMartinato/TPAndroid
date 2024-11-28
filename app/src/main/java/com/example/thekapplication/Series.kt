@@ -114,6 +114,11 @@ fun Sering(name:String, modifier: Modifier = Modifier, viewModel: MainViewModel,
                         label = { Text("Acteurs") },
                         selected = currentDestination?.hasRoute<Acteurs>() == true,
                         onClick = { navController.navigate(Acteurs()) })
+                    NavigationBarItem(
+                        icon = {},
+                        label = { Text("Playlist") },
+                        selected = currentDestination?.hasRoute<Playlist>() == true,
+                        onClick = { navController.navigate(Playlist()) })
                 }
             }
         },

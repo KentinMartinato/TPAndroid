@@ -65,6 +65,7 @@ import kotlinx.coroutines.flow.combine
 @Serializable class Acteurs
 @Serializable data class DetailFilm(val id : String)
 @Serializable data class DetailSerie(val id: String)
+@Serializable class Playlist
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
@@ -91,11 +92,13 @@ class MainActivity : ComponentActivity() {
                         composable<Profile> {
                             if(!portrait) {
                                 Row(
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier
+                                        .fillMaxSize()
                                         .padding(innerPadding)
                                 ) {
                                     Column(
-                                        modifier = Modifier.weight(1f)
+                                        modifier = Modifier
+                                            .weight(1f)
                                             .fillMaxWidth()
                                             .padding(horizontal = 16.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally
@@ -107,7 +110,8 @@ class MainActivity : ComponentActivity() {
                                     Spacer(modifier = Modifier.width(16.dp))
 
                                     Box(
-                                        modifier = Modifier.weight(1f)
+                                        modifier = Modifier
+                                            .weight(1f)
                                             .fillMaxHeight()
                                             .padding(16.dp),
                                         contentAlignment = Alignment.Center
@@ -119,18 +123,19 @@ class MainActivity : ComponentActivity() {
                                                 name = "Android",
                                             )
                                             Spacer(modifier = Modifier.height(16.dp))
-                                            DemarrerButton(onClick = { navController.navigate(Films()) })
+                                            DemarrerButton(onClick = { navController.navigate(Playlist()) })
                                         }
                                     }
                                 }
                             }
                             else{
-                                Column(modifier = Modifier.fillMaxSize()
+                                Column(modifier = Modifier
+                                    .fillMaxSize()
                                     .padding(innerPadding),
                                     horizontalAlignment = Alignment.CenterHorizontally){
                                     Pdp(name = "Android")
                                     Sociaux(name = "Android")
-                                    DemarrerButton(onClick = {navController.navigate(Films())})
+                                    DemarrerButton(onClick = {navController.navigate(Playlist())})
                                 }
                                 }
                                 }
@@ -181,6 +186,9 @@ class MainActivity : ComponentActivity() {
                             )
                             PageDetailSerie(onClick = {navController.navigate(Series())})
                         }
+                        composable<Playlist> {
+                            PagePlaylist(onClick = { navController.navigate(Profile()) })
+                        }
                         }
                     }
             }
@@ -190,7 +198,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Pdp(name: String, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.fillMaxWidth()
+    Column(modifier = Modifier
+        .fillMaxWidth()
         .padding(horizontal = 16.dp))
     {
         Spacer(
